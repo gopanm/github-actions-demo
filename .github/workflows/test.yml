@@ -1,4 +1,4 @@
-name: First CI Pipeline
+name: Run TestNG Tests
 
 on:
   push:
@@ -6,12 +6,18 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Print message
-        run: echo "Hello, CI/CD is working!"
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build and Run Tests
+        run: mvn test
